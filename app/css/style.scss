@@ -1,0 +1,325 @@
+//Variables
+$highlight: #2f2cf7;
+$med: #111111;
+$dark: #000000;
+$light: #888888;
+$white: #ffffff;
+
+//Fonts
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+//Animations
+@keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+
+	25% {
+		opacity: 0.5;
+	}
+
+	50% {
+		opacity: 0.25;
+	}
+
+	75% {
+		opacity: 0.5;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+//Global Styles
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+body {
+	background: $dark;
+	color: $white;
+	font-family: "Open Sans", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+
+	//HTML elements
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: 500;
+		line-height: 1.2;
+		margin: 0 0 1rem;
+	}
+
+	h1 {
+		font-size: 4.156rem;
+		font-weight: 800;
+	}
+
+	h2 {
+		font-size: 2rem;
+	}
+
+	h3 {
+		color: $white;
+		font-size: 1.5rem;
+	}
+
+	h4 {
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	p,
+	ul,
+	ol {
+		color: $light;
+	}
+
+	p {
+		margin-top: 0;
+		margin-bottom: 1rem;
+
+		span {
+			color: $white;
+		}
+	}
+
+	a {
+		color: $highlight;
+
+		&:hover {
+			color: $highlight;
+			text-decoration: none;
+		}
+	}
+
+	hr {
+		margin: 50px 0;
+	}
+
+	ol,
+	ul {
+		padding-left: 2rem;
+	}
+
+	ol {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+
+	ul {
+		column-count: 3;
+		column-gap: 3rem;
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			break-inside: avoid;
+			margin: 0 0 1rem;
+		}
+
+		@media (max-width: 992px) {
+			column-count: 2;
+		}
+
+		@media (max-width: 540px) {
+			column-count: 1;
+		}
+	}
+
+	button,
+	input,
+	optgroup,
+	select,
+	textarea {
+		margin: 0;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	button,
+	.btn {
+		background: $med;
+		border-radius: 0;
+		border: none;
+		color: $white;
+		cursor: pointer;
+		display: inline-block;
+		margin: 30px 0 0;
+		padding: 0.75rem 2rem;
+		text-decoration: none;
+		text-transform: uppercase;
+		transition: all 0.5s ease;
+
+		&--highlight {
+			background: $highlight;
+			color: $white !important;
+		}
+
+		&:hover {
+			background: $highlight;
+			color: $white !important;
+		}
+	}
+
+	form {
+		margin: 0 0 50px;
+
+		.field-wrapper {
+			align-items: center;
+			display: flex;
+			justify-content: flex-start;
+
+			label {
+				opacity: 0;
+				position: absolute;
+				pointer-events: none;
+			}
+		}
+
+		.checkbox-wrapper {
+			margin: 0 0 15px;
+
+			label {
+				cursor: pointer;
+			}
+
+			p {
+				margin: 5px 0 20px;
+			}
+		}
+
+		input {
+			background: $med;
+			border: $dark;
+			border-radius: 0;
+			color: $white;
+			padding: 12px 15px;
+			width: 100%;
+
+			&[type="checkbox"] {
+				cursor: pointer;
+				display: inline-block;
+				height: 16px;
+				margin: 0 5px 0 0;
+				width: 16px;
+			}
+
+			&::placeholder {
+				color: $white;
+			}
+		}
+
+		button {
+			margin: 0;
+		}
+	}
+
+	//Modules
+	.container {
+		margin: 0 auto;
+		max-width: 1140px;
+		padding: 0 15px;
+		width: 100%;
+	}
+
+	.header-bg {
+		height: 100%;
+		object-fit: cover;
+		opacity: 0.4;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.user-input {
+		align-items: center;
+		background: $dark;
+		display: flex;
+		min-height: 35vh;
+		padding: 100px 0;
+		position: relative;
+
+		h2 {
+			font-size: 4rem;
+			text-align: center;
+		}
+	}
+
+	.content {
+		margin: 0 0 100px;
+	}
+
+	#loader {
+		animation: pulse 0.75s infinite;
+		font-size: 1.5rem;
+		text-align: center;
+		transition: all 0.5s ease;
+	}
+
+	#gameContainer {
+		border-bottom: 2px solid;
+		margin: 0 0 50px;
+		padding: 0 0 50px;
+
+		h2 {
+			margin: 0 0 50px;
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			margin: 0;
+		}
+	}
+
+	#randContainer {
+		p {
+			margin: 0;
+		}
+		h2 {
+			font-size: 2rem;
+			text-align: left;
+		}
+	}
+
+	#outputRand {
+		color: $white;
+		display: block;
+		font-size: 2rem;
+		margin: 0;
+	}
+
+	.game-time {
+		color: $light;
+		font-size: 1rem;
+	}
+
+	//Landmarks
+	header {
+		background: transparent;
+		padding: 100px 0;
+		width: 100%;
+
+		.container {
+			padding: 0 15px;
+		}
+	}
+
+	footer {
+		background: $dark;
+		border-top: 1px solid $light;
+		font-size: 0.85rem;
+		padding: 35px 0;
+		text-align: center;
+	}
+}
