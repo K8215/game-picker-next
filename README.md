@@ -2,7 +2,7 @@
 
 Game Picker Next is a web application that retrieves a list of games from a Steam user's library and randomly selects one for the user to play.
 
-See it here: [http://game-picker-9000-app.glitch.me/](https://game-picker-next.vercel.app/)
+See it here: [http://game-picker-next.vercel.app/](https://game-picker-next.vercel.app/)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
