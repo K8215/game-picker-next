@@ -1,5 +1,3 @@
-export default function Loader() {
-  return (
-    <div id="loader">Loading...</div>
-  )
+export default function Loading() {
+	return <div id="loader">Loading...</div>
 }
