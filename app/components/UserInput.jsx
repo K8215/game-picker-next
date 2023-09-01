@@ -3,13 +3,15 @@ import { useState } from "react"
 import Randomizer from "./Randomizer"
 import Error from "./Error"
 import Loader from "./Loader"
+//Hooks
+import useFetch from "./hooks/useFetch"
 
 export default function UserInput({ gameList, setGameList, setGameOutput }) {
 	const [steamId, setSteamId] = useState("")
 	const [checkbox, setCheckbox] = useState(true)
 	const [randomizer, setRandomizer] = useState(false)
 	const [playerName, setPlayerName] = useState("")
-	const [visibility, setVisibility] = useState("Private")
+	const [visibility, setVisibility] = useState("")
 	const [loader, setLoader] = useState(false)
 	const [isError, setIsError] = useState(false)
 	const [errorText, setErrorText] = useState("")
@@ -19,61 +21,31 @@ export default function UserInput({ gameList, setGameList, setGameOutput }) {
 
 		//Clear outputs and show loader
 		clearComponents()
-		setIsError(false)
+		//setIsError(false)
 		setLoader(true)
-
 		//Run fetch requests
 		getGames(steamId)
 		getPlayerInfo(steamId)
 	}
 
 	function clearComponents() {
+		setLoader(false)
+		setIsError(false)
 		setGameList("")
 		setGameOutput(false)
 		setRandomizer(false)
-		setLoader(false)
-	}
-
-	function checkSteamId(data) {
-		if (!Object.keys(data).length) {
-			const err = "Invalid Steam ID"
-
-			clearComponents()
-			setErrorText(err)
-			setIsError(true)
-
-			throw new Error(err)
-		}
 	}
 
 	async function getGames(steamId) {
-		//Fetch returns a promise
-		const res = await fetch(`/api/games/${steamId}`, {
-			next: {
-				revalidate: 60 * 60 * 24,
-			},
+		const route = "games"
+		const res = await useFetch(route, steamId, {
+			setIsError,
+			setErrorText,
+			setLoader,
 		})
 
-		//Fetch error handling
-		if (!res.ok) {
-			const err = "Could not retrieve games."
-
-			clearComponents()
-			setErrorText(err)
-			setIsError(true)
-
-			throw new Error(err)
-		}
-
-		//Await promise and store json data
-		const json = await res.json()
-		const data = json.data.response
-
-		//Not real Steam ID error handling
-		checkSteamId(data)
-
 		//Filter out played games if the box is checked
-		const unfiltered = data.games
+		const unfiltered = res.data.games
 
 		if (checkbox == true) {
 			const filtered = unfiltered.filter(
@@ -91,36 +63,18 @@ export default function UserInput({ gameList, setGameList, setGameOutput }) {
 	}
 
 	async function getPlayerInfo(steamId) {
-		//Fetch returns a promise
-		const res = await fetch(`/api/user/${steamId}`, {
-			next: {
-				revalidate: 60 * 60 * 24,
-			},
+		const route = "user"
+		const res = await useFetch(route, steamId, {
+			setIsError,
+			setErrorText,
+			setLoader,
 		})
 
-		//Error handling
-		if (!res.ok) {
-			const err = "Could not retrieve user name."
-
-			clearComponents()
-			setErrorText(err)
-			setIsError(true)
-
-			throw new Error(err)
-		}
-
-		//Await promise and store json data
-		const json = await res.json()
-		const data = json.data.response
-
-		//Not real Steam ID error handling
-		checkSteamId(data)
-
-		const player = data.players[0]
+		const player = res.data.players[0]
 		setPlayerName(player.personaname)
 
 		//Steams API shows a 3 if the user is public and a 1 if they are private
-		const visState = data.players[0].communityvisibilitystate
+		const visState = player.communityvisibilitystate
 		visState == 3 ? setVisibility("Public") : setVisibility("Private")
 	}
 
