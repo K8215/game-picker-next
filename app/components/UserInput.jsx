@@ -4,7 +4,7 @@ import Randomizer from "./Randomizer"
 import Error from "./Error"
 import Loader from "./Loader"
 //Hooks
-import useFetch from "./hooks/useFetch"
+import useFetch from "../hooks/useFetch"
 
 export default function UserInput({ gameList, setGameList, setGameOutput }) {
 	const [steamId, setSteamId] = useState("")
@@ -21,7 +21,6 @@ export default function UserInput({ gameList, setGameList, setGameOutput }) {
 
 		//Clear outputs and show loader
 		clearComponents()
-		//setIsError(false)
 		setLoader(true)
 		//Run fetch requests
 		getGames(steamId)
@@ -56,7 +55,7 @@ export default function UserInput({ gameList, setGameList, setGameOutput }) {
 			setGameList(unfiltered)
 		}
 
-		//Hide loader and show output components
+		//Hide loader and show output components on successful request
 		setLoader(false)
 		setRandomizer(true)
 		setGameOutput(true)
